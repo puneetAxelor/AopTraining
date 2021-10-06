@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+  	http://axelor.com/xml/ns/object-views/object-views_5.3.xsd">
+  	
+  	 <grid model="com.axelor.employee.db.College"  title="Colleges" editable="true" canSave="true" name="college-grid" groupBy="collegeType">
+  		<hilite if="cName == null" color="warning" strong="true"/>
+  		<field name="collegeType" hidden="true"/>
+  		<field name="cname" />
+		<field name="address"  />
+  	</grid>
+  	
+  	<grid model="com.axelor.employee.db.College" title="Colleges" name="college-test-grid" editable="true">
+		<toolbar>
+			<button onClick="clickMe" prompt="Are you sure? (From toolBar)" name="clickMeBtn" title="Click Me!" icon="fa-print"/>
+		</toolbar>
+		<menubar>
+			<menu title="Buttons">
+				<item action="action" title="Test"/>
+			</menu>
+			<menu title="Button1">
+				<item action="action1" title="Test 1"/>
+			</menu>
+		</menubar>
+		<field name="collegeType" title="Test college"/>
+		<field name="collegeName" canSuggest="true"/>
+		<field name="address" domain="self.employeeAddress == 'BENGALURU'" massUpdate="true"/>
+		<button onClick="clickMe" prompt="Are you sure?" name="clickMeBtn" title="Click Me!" icon="fa-print"/>
+	</grid>
+  	
+  	<form model="com.axelor.employee.db.College" title="College" width="large" name="college-form">
+  		<panel>
+	  		<field name="collegeType" />
+		  		<field name="cname" />
+			<field name="address" canEdit="true" canNew="true" canDelete="true" canSave="true" canCopy="true" canAttach="true" />
+		</panel>
+		<panel-tabs>	
+			<panel-related field="employeeList"  canMove="true" orderBy="sequence" colSpan="12" form-view="employee-popup-form" grid-view="employee-grid" x-selector="checkbox"/>
+			<panel-related field="laptopSet" canMove="true" colSpan="12" x-selector="checkbox"/>
+			
+			
+			<panel title="Employees editor">
+				<field name="employeeList" showTitle="false">
+					<editor x-viewer="true">
+						<field name="name"/>
+						<field name="parentName"/>
+					</editor>
+				</field>
+			</panel>
+			<panel title="Employees editor viewer">
+				<field name="employeeList" showTitle="false">
+					<viewer>
+						<![CDATA[
+							<strong>{{record.name}}</strong>
+							<h4>{{record.parentName}}</h4>
+						]]>
+					</viewer>
+					<editor>
+						<field name="name"/>
+						<field name="parentName"/>
+					</editor>
+				</field>
+			</panel>
+		</panel-tabs>
+  	</form>
+  	
+</object-views>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+  	http://axelor.com/xml/ns/object-views/object-views_5.3.xsd">
+  	
+  	<menuitem title="Employee" name="employee-root" order="-1"/>
+  	
+  	<menuitem title="Employees" name="employee-root-employee" icon="fa-id-card" icon-background="blue" tag="Important" tag-style="important" tag-count="true" parent="employee-root" action="action.employee.root.employee" />
+  	
+  	<action-view name="action.employee.root.employee" title="Employees" model="com.axelor.employee.db.Employee" icon="fas fa-user">
+  		<view type="grid" name="employee-grid" />
+  		<view type="form" name="employee-form" />
+  	</action-view>
+
+  	<menuitem title="Employees" name="employee-top-root" top="true" left="false"/>
+  	<menuitem title="Employees" name="employee-root-employee-green" icon="fa-id-card" icon-background="green" tag="Important" left="false" top="true" tag-style="important" parent="employee-top-root" action="action.employee.root.employee" />
+
+  	<menuitem title="Addresses" name="employee-root-address" tag-count="true" parent="employee-root" action="action.employee.root.address" />
+  	
+  	<action-view name="action.employee.root.address" title="Addresses" model="com.axelor.employee.db.Address">
+  		<view type="grid" name="address-grid" />
+  		<view type="form" name="address-form" />
+  	</action-view>
+  	
+  	<dashboard name="welcome.dashboard" title="Welcome!">
+    <dashlet action="grid:laptop-grid" colSpan="4"/>
+    <dashlet action="grid:college-grid" colSpan="4"/>
+    <dashlet action="cards:laptop-cards" colSpan="4"/>
+    <dashlet action="custom:report-tasks-today"/>
+    <dashlet action="chart:laptop-chart"/>
+    <dashlet colSpan="12" action="sale.orders"/>
+  </dashboard>
+
+  <action-view name="welcome" title="Welcome!">
+    <view type="dashboard" name="welcome.dashboard"/>
+  </action-view>
+
+  <menuitem name="menu-dashboards" order="-101"
+    title="Dashboards" icon="fa-dashboard" icon-background="blue"/>
+
+  <menuitem name="menu-welcome" parent="menu-dashboards"
+    title="Welcome!" action="welcome"/>
+  	
+  	<menuitem title="Laptops" name="employee-root-laptop" top="true" tag="Laptop success" tag-style="success" parent="employee-root" action="action.employee.root.laptop" />
+  	
+  	<action-view name="action.employee.root.laptop" title="Laptops" model="com.axelor.employee.db.Laptop">
+  		<view type="grid" name="laptop-grid" />
+  		<view type="form" name="laptop-form" />
+  		<view type="cards" name="laptop-cards"/>
+  		<view type="chart" name="laptop-chart" />
+  		<view type="calendar" name="project-task-calendar-my" />
+  		<view-param name="forceEdit" value="true"/>
+		<view-param name="showArchived" value="true"/>
+  		<view-param name="search-filters" value="laptop-search-filters"/>
+  	</action-view>
+  	
+  	<menuitem name="menu-project-tasks-gantt" parent="employee-root"
+    title="Task planning"
+    action="project.tasks.gantt"/>
+
+  <action-view name="project.tasks.gantt" title="Task planning" model="com.axelor.employee.db.Laptop">
+    <view type="gantt" name="project-task-gantt"/>
+  </action-view>
+  	
+  	<menuitem title="Laptops test" name="employee-root-laptop-testing" parent="employee-root" action="action.employee.root.laptop.testing"/>
+	<action-view name="action.employee.root.laptop.testing" title="Laptops" model="com.axelor.employee.db.Laptop">
+		<view type="cards" name="laptop-cards"/>
+		<view type="grid" name="laptop-grid"/>
+		<view type="form" name="laptop-form"/>
+		<domain>self.test = :_test</domain>
+		<context name="_test" expr="Testing"/>
+	</action-view>
+  	
+  	<menuitem name="menu-laptop-trees" parent="employee-root" title="All Tasks (tree)" action="project.tasks.tree"/>
+
+	  <action-view name="project.tasks.tree" title="Projects tree">
+	    <view type="tree" name="laptop-trees"/>
+	  </action-view>
+  	
+  	<menuitem title="Colleges" name="employee-root-college" parent="employee-root" action="action.employee.root.college" />
+  	
+  	<action-view name="action.employee.root.college" title="Colleges" model="com.axelor.employee.db.College">
+  		<view type="grid" name="college-grid" />
+  		<view type="form" name="college-form" />
+  		<view-param name="details-view" value="true" />
+  		<domain>self.address != null</domain>	
+  	</action-view>
+  	
+ 	<menuitem title="Test colleges" name="employee-root-test-college" parent="employee-root" action="action.employee.test.college"/>
+	<action-view name="action.employee.test.college" title="Test colleges" model="com.axelor.employee.db.College">
+		<view type="grid" name="college-test-grid"/>
+		<view type="form" name="college-form"/>
+		<context name="_showRecord" expr="eval: 2"/>
+	</action-view>
+
+	<menuitem name="menu-employee-country" parent="employee-root" title="Country"  action="employee.country"/>
+
+  	<action-view name="employee.country" title="Country" model="com.axelor.employee.db.Country">
+   	 <view type="grid" name="country-grid"/>
+  	  <view type="form" name="country-form"/>
+  	</action-view>
+  	
+  	<menuitem title="Performances" name="employee-root-performance" parent="employee-root" action="action.employee.root.performance" />
+
+	<action-view name="action.employee.root.performance" title="Performances" model="com.axelor.employee.db.Performance">
+		<view type="kanban" name="performance-kanban"/>
+		<view type="form" name="performance-form"/>
+	</action-view>
+  	
+</object-views>

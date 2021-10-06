@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.3.xsd">
+
+	<kanban columnBy="statusSelect" model="com.axelor.employee.db.Performance" sequenceBy="priority" title="Performances" name="performance-kanban"
+		draggable="true" onMove="action-performance-validate-kanban-on-move" onNew="action-performance-record-kanban-on-new" limit="2">
+		<field name="name"/>
+		<field name="performance"/>
+		<field name="description"/>
+		<hilite color="danger" if="performance == 0" />
+	    <hilite color="success" if="performance == 4" />
+	    <hilite color="info" if="performance >= 2" />
+	    <hilite color="warning" if="performance > 0" />
+		<template>
+			<![CDATA[
+				<div>
+					<h4>Name:</h4>
+					<h5>{{record.name}}</h5>
+					<br/>
+					<h4>%:</h4>
+					<h5>{{record.performance}}</h5>
+					<br/>
+					<h4>Description:</h4>
+					<span ng-bind-html="description"/>
+				</div>
+			]]>
+		</template>
+	</kanban>
+
+	<form model="com.axelor.employee.db.Performance" title="Performance" name="performance-form" onLoad="action-performance-attrs-set-attrs-on-validate">
+		<panel name="mainPanel" title="Main panel">
+			<field name="statusSelect" showTitle="false" widget="NavSelect" colSpan="12" onChange="action-performance-group-status-onchange"/>
+			<field name="name"/>
+			<field name="performance"/>
+			<field name="description" widget="html" colSpan="12"/>
+		</panel>
+	</form>
+
+	<action-record name="action-peformance-record-kanban-on-new" model="com.axelor.employee.db.Performance">
+		<field name="name" expr="eval: _value"/>
+	</action-record>
+
+	<action-validate name="action-performance-validate-kanban-on-move">
+		<info message="Record moved!"/>
+	</action-validate>
+	
+	<action-group name="action-performance-group-status-onchange">
+		<action name="save"/>
+		<action name="action-performance-attrs-set-attrs-on-validate"/>
+		<action name="save"/>
+	</action-group>
+
+	<action-attrs   name="action-performance-attrs-set-attrs-on-validate">
+		<attribute name="readonly" for="name" expr="eval: true" if="statusSelect &gt;= 5"/><!-- > -> &gt; , < -> &lt; -->
+		<attribute name="title" for="mainPanel" expr="eval: statusSelect &gt;= 1 ? &quot;Validated&quot; : &quot;Main panel&quot;"/>
+	</action-attrs>
+
+</object-views>

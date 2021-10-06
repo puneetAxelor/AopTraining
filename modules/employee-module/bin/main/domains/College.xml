@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
+  	http://axelor.com/xml/ns/domain-models/domain-models_5.3.xsd">
+
+	<module package="com.axelor.employee.db" name="employee"/>
+
+	<entity name="College">
+		<string name="collegeType" title="College Type" selection="employee.college.college.type"/>
+		<string name="cname" title="College name" namecolumn="true" />
+		<string name="parentName" title="parentName"/>
+		<one-to-one ref="com.axelor.employee.db.Address" name="address"/>
+		<many-to-many ref="com.axelor.employee.db.Laptop" name="laptopSet" title="Laptops"/>
+		
+		<many-to-many ref="com.axelor.employee.db.Employee" orderBy="name" name="employeeList" title="Employees" mappedBy="college" />
+		
+		<extra-code>
+			<![CDATA[
+				public static final String SCHOOL_TYPE_GOVERNMENT = "government";
+				public static final String SCHOOL_TYPE_SEMI_GOVERNMENT = "semi-government";
+				public static final String SCHOOL_TYPE_PRIVATE = "private";
+			]]>
+			
+		</extra-code>
+		
+	</entity>
+
+</domain-models>
