@@ -1,0 +1,4 @@
+rootProject.name = 'axelor-demo'
+
+// Include modules
+ include "modules:employee-module"
