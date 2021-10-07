@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
+  	http://axelor.com/xml/ns/domain-models/domain-models_5.3.xsd">
+  	
+  	<module name="employee" package="com.axelor.employee.db" />
+  	
+  	<sequence name="laptop.reference" increment="1" initial="1" padding="4" prefix="PE" suffix="LOR" />
+  	
+  	<enum name="STATUS">
+  		<item name="ACTIVE" value="active"/>
+  		<item name="INACTIVE" value="inactive"/>
+  	</enum>
+  	
+  	<entity name="Laptop" lang="java" jsonAttrs="false" table="laptop_table">
+  		<string name="lid"/>
+  		<string name="jsonDetails" title="Json Details" json="true"/>	
+  		<string name="uniqueTestField" title="Unique testing" unique="true" min="1" max="10" namecolumn="true"/>
+  		<string name="lname" default="HP" translatable="true" required="true" />
+  		<string name="reference"  title="Reference" sequence="laptop.reference" readonly="true" />
+  		<string name="password" title="Password" password="true" encrypted="true"/>
+  		<decimal name="totalAmount"/>
+		<date name="orderDate"/>
+		<string name="test" large="true" multiline="true"/>
+		<date name="dateOfManufacture" title="DOM"/>
+		<date name="startDate" title="Start"/>
+		<date name="endDate" title="End"/>
+  		<boolean name="isActive" title="is active" />
+  		<datetime name="dateTimeT" tz="true" title="Date time test"/>
+  		<enum name="status" ref="STATUS"/>
+  		<many-to-one name="employee" ref="Employee" />
+  		<many-to-one ref="com.axelor.meta.db.MetaFile" name="image" title="Image"/>
+  	</entity>
+</domain-models>

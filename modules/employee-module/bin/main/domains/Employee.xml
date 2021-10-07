@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
+  	http://axelor.com/xml/ns/domain-models/domain-models_5.3.xsd">
+
+	<module name="employee" package="com.axelor.employee.db"/>
+
+	<entity name="Employee" lang="java" cacheable="true" >
+		<string name="name" title="FirstName" required="true" default="John" />
+		<string name="lastName" title="LastName" required="true" default="Doe" search="true"/>
+		
+		<string name="fullName"  search="name,email" title="FullName" readonly="true"  >
+		<![CDATA[
+				return name + " " + lastName; 
+			]]>
+		</string>
+		
+		<integer name="sequence"/>
+		
+		<string name="email" required="true" index="true" unique="true" min="12" max="100" title="Email" help="This field takes employee's email" />
+		<string name="transientTest" title="Transient test" hidden="true" transient="true" />
+		<string name="comments" nullable="true" multiline="true" />
+		<string name="parentName" title="Parent name" required="true"/>
+		<boolean name="isActive" title="Is active" />
+		<decimal name="salary" massUpdate="true" title="Employee salary" precision="9" scale="2" />
+		<date name="dateOfBirth" title="DOB" />
+		<time name="timeOfBirth" title="Birth time" />
+		 
+		<datetime name="dateTimeE" tz="true" title="Emp Date Time" />
+		<binary name="image" title="Image"/>
+		
+		<many-to-one ref="com.axelor.employee.db.College" name="college" title="College"/>
+		
+			
+		<many-to-many ref="com.axelor.employee.db.Laptop" name="laptopSet" title="Laptops" />		
+		
+		<finder-method name="findByNameAndEmail" using="name,email" orderBy="name" cacheable="true"/>
+		<finder-method name="findAllByNameAndEmail" using="name,email" all="true"/>
+		<finder-method name="findByNameOrEmail" using="String:name,String:email" filter="self.name = :name OR self.email = :email"/>
+
+	</entity>
+
+</domain-models>

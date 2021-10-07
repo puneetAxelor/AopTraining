@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+  	http://axelor.com/xml/ns/object-views/object-views_5.3.xsd">
+
+	<grid model="com.axelor.employee.db.Employee" title="Employees" customSearch="true" freeSearch="true" name="employee-grid">
+		<field name="name" />
+		<field name="lastName" />
+		<field name="fullName" />
+		<field name="sequence" hidden="true"/>
+		<field name="email" />
+		<field name="transientTest" />
+		<field name="comments" />
+		<field name="isActive" />
+		<field name="salary" />
+		<field name="dateOfBirth" />
+		<field name="timeOfBirth" />
+		<field name="dateTimeE" />
+		<field name="college"/>
+		<field name="laptopSet" />
+		<field name="image" />
+	</grid>
+	
+	<form model="com.axelor.employee.db.Employee" title="Employee" name="employee-form"
+		onNew="action-employee-record" onLoad="action-employee-validate" onSave="action-employee-onSave" canAttach="false" width="large">
+		
+		
+		
+		<panel title="Main Panel" name="mainPanel" showFrame="true" if-module="employee-module">
+			<panel name="innerPanel1" colSpan="8" title="Inner Panel 1">
+				<field name="name" />
+				<panel name="imagePanel" title="Image Panel">
+					<field name="image" widget="Image"/>
+				</panel>
+				<field name="lastName" />
+				<field name="fullName" />
+				<field name="email">
+					<viewer><![CDATA[ 
+	        			<a href="mailto:{{record.email}}">{{record.email}}</a>
+	        		]]></viewer>
+				</field>
+				<field name="transientTest" />
+				<field name="comments" />
+				<field name="isActive" />
+				<field name="salary" />
+				<field name="dateOfBirth" />
+				<field name="timeOfBirth" />
+				<field name="dateTimeE" />
+				<field name="college"/>
+				<field name="laptopSet" />
+				
+				
+			</panel>
+		</panel>
+		
+		<panel-include view="employee-popup-form"/>
+		
+		<panel name="innerPanel2" colSpan="4" itemSpan="3" sidebar="true" canCollapse="true" collapseIf="true" title="Inner Panel 2">
+				<field name="name" />
+				<field name="lastName" />
+				<field name="fullName" />
+				<field name="email">
+					<viewer><![CDATA[ 
+	        			<a href="mailto:{{record.email}}">{{record.email}}</a>
+	        		]]></viewer>
+				</field>	
+			</panel>
+	</form>
+	
+	<form model="com.axelor.employee.db.Employee" title="Employee" name="employee-popup-form">
+		<panel name="innerPanel1" title="Inner panel 1">
+			<field name="name"/>
+			<field name="lastName" />
+			<field name="email"/>
+			<field name="fullName"/>
+		</panel>
+	</form>
+	
+	<action-record name="action-employee-onSave" model="com.axelor.employee.db.Employee">
+		<field name="isActive" expr="true"/>
+	</action-record>
+
+	<action-validate name="action-employee-validate">
+		<notify message="Employee saved to the database"/>
+	</action-validate>
+
+	<action-record name="action-employee-record" model="com.axelor.employee.db.Employee">
+		<field name="parentName" expr="Axelor"/>
+	</action-record>
+</object-views>
+	
+	
+

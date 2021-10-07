@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+  	http://axelor.com/xml/ns/object-views/object-views_5.3.xsd">
+  	
+  	<grid model="com.axelor.employee.db.Laptop" title="Laptops" customSearch="true" freeSearch="true" canArchive="true"  name="laptop-grid">
+  		<hilite background="warning" strong="true" if="$contains(lname, 'something')"/>
+  		<field name="lname" />
+		<field name="status" />
+		<field name="isActive" />
+		<field name="reference" />
+		<field name="jsonDetails" />
+		<field name="dateOfManufacture"/>
+		<field name="totalAmount"/>
+		<field name="orderDate"/>
+		<field name="image"/>
+		<field name="dateTimeT"/>
+		<field name="uniqueTestField"/>
+		<field name="employee"/>
+		<field name="startDate"/>
+			<field name="endDate"/>
+  	</grid>
+  	
+  	<form model="com.axelor.employee.db.Laptop" title="Laptops" name="laptop-form" onNew="action-laptop-record-default-onNew">
+  		<panel name="main-panel" title="Main Panel">
+  			<field name="$isValidated" title="Validated" type="one-to-many" target="com.axelor.employee.db.Address" colSpan="12"/>
+	  		<field name="lname" />
+	  		<field name="employee"/>
+	  		<spacer/>
+			<field name="status" />
+			<help colspan="6" >Trying the help tag</help>
+			<label title="The is a label"/>
+			<field name="isActive" />
+			<static colSpan="12">This is static and no need for quotes</static>
+			<field name="reference" />
+			<field name="totalAmount"/>
+		<field name="orderDate"/>
+			<separator colSpan="12"/>
+			<field name="jsonDetails" widget="json-raw" />
+			<field name="employee"/>
+			<field name="test"/>
+			<field name="startDate"/>
+			<field name="endDate"/>
+			<field name="parentTask"/>
+      <field name="sequence"/>
+		</panel>
+		
+		<panel-dashlet action="laptop-trees"/>
+		
+		<panel-tabs>
+			<panel name="laptopDetailsPanel" title="Laptop Panel" onTabSelect="action-laptop-record">
+				<panel name="laptopDetails" title="Laptop Details">
+					<field name="dateOfManufacture"></field>				
+				</panel>
+				
+				<panel name="imagePanel" title="Image Panel">
+					<field name="image" widget="binary-link"/>
+				</panel>
+			</panel>
+			<panel name="passwordPanhel" title="Password" onTabSelect="action-password-record">
+				<field name="password" widget="password"/>
+			</panel>
+			
+			<panel title="Planning">
+        <field name="plannedStartDate"/>
+        <field name="plannedDuration"/>
+        <field name="plannedProgress"/>
+        <spacer/>
+        <panel title="Linked project tasks" colSpan="12">
+          <field name="finishToStartTaskSet" widget="TagSelect" />
+          <field name="startToStartTaskSet" widget="TagSelect" />
+          <field name="finishToFinishTaskSet" widget="TagSelect" />
+          <field name="startToStartTaskSet" widget="TagSelect" />
+        </panel>
+      </panel>
+		</panel-tabs>
+		
+		<panel name="buttonsPanel" sidebar="true">
+			<button onClick="action-validate" name="validateBtn" title="Validate"/>
+		</panel>
+		
+		<panel name="buttonsPanel1" sidebar="true">
+			<button onClick="action-validate1" name="validateBtn1" title="Validate1"/>
+		</panel>
+		
+		<panel name="buttonsPanel1" sidebar="true">
+			<button onClick="action-laptop-address-about" name="callBtn" title="Call"/>
+		</panel>
+		
+		<panel name="buttonsPanel2" sidebar="true">
+			<button onClick="check-order-dates" name="checkBtn" title="Check"/>
+		</panel>
+		
+  	</form>
+  	
+  	<action-view name="laptop-trees" title="Projects">
+    <view type="tree" name="laptop-trees"/>
+  </action-view>
+  	
+  	<tree name="laptop-trees" title="Project Tasks">
+
+	  <!-- define tree columns -->
+	  <column name="title" type="string" /> 
+	  <column name="progress" type="string" />
+	
+	  <!-- define 1st level node -->
+	  <node model="com.axelor.employee.db.Employee" onClick="projects.task.open.project"> 
+	    <field name="name" as="title" />
+	  </node>
+	
+	  <!-- define 2nd level node -->
+	  <node model="com.axelor.employee.db.Laptop" parent="employee"
+	    draggable="true" onClick="project.task.add"> 
+	    <field name="lname" as="title" />
+		<field name="dateOfManufacture" as="progress"/>
+	  </node>
+
+</tree>
+  	
+  	<action-view name="projects.task.open.project" title="Laptop Tree" model="com.axelor.employee.db.Employee">
+	    <view type="grid" name="laptop-grid"/>
+	    <view type="form" name="laptop-form"/>
+	   
+	    <context name="project_id" expr="eval: lname"/>
+	    <context name="_showSingle" expr="true"/>
+  </action-view>
+  	
+  	<action-view name="project.task.add" title="Laptops" model="com.axelor.employee.db.Laptop">
+  		<view type="grid" name="laptop-grid" />
+  		<view type="form" name="laptop-form" />
+  		
+	    <context name="task_id" expr="eval: lname"/>
+	    <context name="_showSingle" expr="true"/>
+  	</action-view>
+  	                           
+  	<cards name="laptop-cards" model="com.axelor.employee.db.Laptop" title="Laptop" width="300px">
+		<field name="reference"/>
+		<field name="uniqueTestField"/>
+		<field name="dateOfManufacture"/>
+		<field name="dateTimeT"/>
+		<field name="image"/>
+		<template>
+			<![CDATA[
+				<div class="span4 card-image">
+    				<img ng-if="image" ng-src="{{$image(null, 'image')}}">
+				</div>
+				<div class="span8">
+					<strong>{{reference}}</strong>
+					<br/>
+    				<strong>{{uniqueTestField}}</strong>
+    				<br/>
+    				<strong>{{dateOfManufacture}}</strong>
+    				<br/>
+    				<strong>{{dateTimeT}}</strong>
+				</div>
+			]]>
+		</template>
+	</cards>
+	
+	<chart name="laptop-chart" title="Laptops per month"> 
+	  <search-fields> 
+	     <field type="datetime" name="fromDateTime" title="From Date"/>
+	     <field type="datetime" name="toDateTime" title="To Date"/>
+	  </search-fields>
+	  <dataset type="jpql"> 
+	  <![CDATA[
+	  	SELECT
+	      SUM(totalAmount) AS amount,
+	      MONTH(orderDate) AS month,
+	     lname AS Laptop
+  		FROM
+     	 Laptop
+     	WHERE
+      		YEAR(orderDate) = YEAR(current_date)
+      		AND orderDate > :fromDateTime
+      		AND orderDate < :toDateTime 
+  		GROUP BY
+    		lname,
+    	 	MONTH(orderDate)
+ 		ORDER BY
+      		month
+	  ]]>
+	  </dataset>
+	  <category key="month" type="month"/> 
+  	<series key="amount" groupBy="employee" type="bar"/>
+	</chart>
+	
+	<custom name="report-tasks-today" title="Laptops Active" css="report-box">
+    <dataset type="jpql">
+    <![CDATA[
+    	select count(lname) as total from Laptop
+    ]]>
+    </dataset>
+    <template>
+    <![CDATA[
+    <div class="report-data">
+      <h1>{{first.total}}</h1>
+      <small>Active</small>
+    </div>
+    ]]>
+    </template>
+  </custom>
+  
+  
+
+	<calendar name="project-task-calendar-my" title="My Tasks" model="com.axelor.employee.db.Laptop"
+	    colorBy="lname"
+	    eventStart="startDate"
+	    eventStop="endDate"
+	    eventLength="1">
+	    <field name="lname" />
+  </calendar>
+  
+  <gantt name="project-task-gantt" title="Task Planning" model="com.axelor.employee.db.Laptop"
+    taskStart="plannedStartDate"
+    taskDuration="plannedDuration"
+    taskParent="parentTask"
+    taskSequence="sequence"
+    taskProgress="plannedProgress"
+    x-finish-to-start="finishToStartTaskSet"
+    x-start-to-start="startToStartTaskSet"
+    x-finish-to-finish="finishToFinishTaskSet"
+    x-start-to-finish="startToFinishaskSet">
+    <field name="lname" />
+    <field name="reference" />
+    <field name="dateOfManufacture" />
+  </gantt>
+
+	<search-filters name="laptop-search-filters" model="com.axelor.employee.db.Laptop" title="Laptops">
+		<field name="dateOfManufacture" hidden="true"/>
+		<filter title="Date time is not null">
+			<domain>self.dateTimeT != null</domain>
+		</filter>
+	</search-filters>
+
+	<action-method name="action-laptop-address-about">
+    	<call class="com.axelor.laptop.web.HelloController" method="say(lname)"/>
+  	</action-method>
+  	
+  	<action-record name="action-laptop-record-default-onNew" model="com.axelor.employee.db.Laptop">
+  		<field name="test" expr="eval: _test" />
+  	</action-record>
+  	
+  	<action-record name="action-laptop-record" copy="false" saveIf="lname != null" model="com.axelor.employee.db.Laptop">
+  		<field name="dateOfManufacture" copy="false " expr="eval: __date__" if="dateOfManufacture == null" />
+  	</action-record>
+  	
+  	<action-record name="action-password-record" model="com.axelor.employee.db.Laptop">
+  		<field name="password" expr="12345" if="password = null"/>  	
+  	</action-record>
+  	 
+  	<action-validate name="action-validate">
+  		<info message="Password is default only" if="password != '12345'"/>
+  		<error message="Greetings from error message" if="password != '12345'" action=""/>
+   	</action-validate>
+  	
+  	<action-validate name="action-validate1">
+  		<alert message="This is an alert" if="password != '12345'" action=""/>
+  		<notify message="This is a notification" if="password != '12345'"/>
+  	</action-validate>
+  	
+  	<action-condition name="check-order-dates">
+	  <check field="startDate"/>
+	  <check field="endDate"/>
+	  <check field="endDate" if="startDate &gt; endDate"
+	    error="Invalid Date"/>
+	</action-condition>
+	
+	<action-group name="action.group.test">
+      <action name="action-laptop-record"/>
+      <action name="action-validate"/>
+      <action name="action-validate1"/>
+      <action name="action-password-record"/>
+    </action-group>
+  	
+  	
+  	<action-record name="action-validate-onClick" model="com.axelor.employee.db.Laptop">
+		<field name="$isValidated" expr="eval: true"/>
+	</action-record>
+</object-views>
