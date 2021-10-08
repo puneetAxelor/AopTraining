@@ -6,8 +6,8 @@
   	
   	<module package="com.axelor.employee.db" name="employee"/>
 
-  <entity name="Country" cacheable="true">
-    <string name="code" required="true" unique="true" min="2"/>
+  <entity name="Country"  cacheable="true">
+    <string name="code"  required="true" unique="true" min="2"/>
     <string name="name" required="true" unique="true" min="2"/>
   </entity>
   	

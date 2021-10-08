@@ -6,7 +6,7 @@
   	
   	
   	<selection name="employee.college.college.type">
-  		<option value="government">Government</option>
+  		<option  value="government">Government</option>
   		<option value="semi-government">Semi-Government</option>
   		<option value="private">Private</option>
   	</selection>

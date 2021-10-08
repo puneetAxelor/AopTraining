@@ -20,7 +20,7 @@
   		<string name="lname" default="HP" translatable="true" required="true" />
   		<string name="reference"  title="Reference" sequence="laptop.reference" readonly="true" />
   		<string name="password" title="Password" password="true" encrypted="true"/>
-  		<decimal name="totalAmount"/>
+  		<decimal name="totalAmount" title="Cost"/>
 		<date name="orderDate"/>
 		<string name="test" large="true" multiline="true"/>
 		<date name="dateOfManufacture" title="DOM"/>

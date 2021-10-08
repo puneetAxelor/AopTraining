@@ -4,14 +4,15 @@
   	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
   	http://axelor.com/xml/ns/object-views/object-views_5.3.xsd">
 
-	<grid model="com.axelor.employee.db.Employee" title="Employees" customSearch="true" freeSearch="true" name="employee-grid">
+	<grid canArchive="true" x-selector="checkbox"   sortable="false" width="large" orderBy="name" onNew="action-employee-record" edit-icon="false"  helpLink="www.sampleLink.com" expandable="true" editable="true" canNew="true" canMove="true" canSave="true" canDelete="true" canEdit="true" model="com.axelor.employee.db.Employee"  title="Employees" customSearch="true" freeSearch="none" name="employee-grid">
 		<field name="name" />
-		<field name="lastName" />
+		<field name="lastName" bgColor="red" fgColor="red"/>
 		<field name="fullName" />
+		<field name="parentName" />
 		<field name="sequence" hidden="true"/>
 		<field name="email" />
 		<field name="transientTest" />
-		<field name="comments" />
+		<field bgColor="red" fgColor="red" domain="isActive=true" canNew="false" canSuggest="false" name="comments" />
 		<field name="isActive" />
 		<field name="salary" />
 		<field name="dateOfBirth" />
@@ -34,7 +35,8 @@
 					<field name="image" widget="Image"/>
 				</panel>
 				<field name="lastName" />
-				<field name="fullName" />
+				<field name="fullName" showIf="name != null" />
+				<field name="parentName" />
 				<field name="email">
 					<viewer><![CDATA[ 
 	        			<a href="mailto:{{record.email}}">{{record.email}}</a>
@@ -47,10 +49,10 @@
 				<field name="dateOfBirth" />
 				<field name="timeOfBirth" />
 				<field name="dateTimeE" />
-				<field name="college"/>
+				<field name="college" hideIf="email==null"/>
 				<field name="laptopSet" />
 				
-				
+								
 			</panel>
 		</panel>
 		
@@ -59,7 +61,7 @@
 		<panel name="innerPanel2" colSpan="4" itemSpan="3" sidebar="true" canCollapse="true" collapseIf="true" title="Inner Panel 2">
 				<field name="name" />
 				<field name="lastName" />
-				<field name="fullName" />
+				<field name="fullName" showIf="name != null" />
 				<field name="email">
 					<viewer><![CDATA[ 
 	        			<a href="mailto:{{record.email}}">{{record.email}}</a>
@@ -83,6 +85,10 @@
 
 	<action-validate name="action-employee-validate">
 		<notify message="Employee saved to the database"/>
+	</action-validate>
+	
+	<action-validate name="action-employee-onNew-message">
+		<notify message="New Employee Details"/>
 	</action-validate>
 
 	<action-record name="action-employee-record" model="com.axelor.employee.db.Employee">

@@ -32,7 +32,7 @@
 		<panel name="mainPanel" title="Main panel">
 			<field name="statusSelect" showTitle="false" widget="NavSelect" colSpan="12" onChange="action-performance-group-status-onchange"/>
 			<field name="name"/>
-			<field name="performance"/>
+			<field name="performance" />
 			<field name="description" widget="html" colSpan="12"/>
 		</panel>
 	</form>

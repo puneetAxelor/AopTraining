@@ -32,7 +32,7 @@
   	<form model="com.axelor.employee.db.College" title="College" width="large" name="college-form">
   		<panel>
 	  		<field name="collegeType" />
-		  		<field name="cname" />
+		  	<field name="cname" />
 			<field name="address" canEdit="true" canNew="true" canDelete="true" canSave="true" canCopy="true" canAttach="true" />
 		</panel>
 		<panel-tabs>	

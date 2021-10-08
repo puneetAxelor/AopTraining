@@ -7,8 +7,8 @@
 	<module name="employee" package="com.axelor.employee.db"/>
 
 	<entity name="Employee" lang="java" cacheable="true" >
-		<string name="name" title="FirstName" required="true" default="John" />
-		<string name="lastName" title="LastName" required="true" default="Doe" search="true"/>
+		<string name="name" insertable="true" title="FirstName" required="true" default="John" />
+		<string name="lastName" index="idx_last" search="name" title="LastName" required="true" default="Doe" />
 		
 		<string name="fullName"  search="name,email" title="FullName" readonly="true"  >
 		<![CDATA[
@@ -18,17 +18,17 @@
 		
 		<integer name="sequence"/>
 		
-		<string name="email" required="true" index="true" unique="true" min="12" max="100" title="Email" help="This field takes employee's email" />
+		<string name="email"  namecolumn="true" required="true" index="true" unique="true" min="12" max="100" title="Email" help="This field takes employee's email" />
 		<string name="transientTest" title="Transient test" hidden="true" transient="true" />
-		<string name="comments" nullable="true" multiline="true" />
-		<string name="parentName" title="Parent name" required="true"/>
-		<boolean name="isActive" title="Is active" />
+		<string name="comments" search="fullName"  copy="true" nullable="true" multiline="true" />
+		<string name="parentName" title="Parent name" />
+		<boolean name="isActive" title="Is active"  />
 		<decimal name="salary" massUpdate="true" title="Employee salary" precision="9" scale="2" />
 		<date name="dateOfBirth" title="DOB" />
 		<time name="timeOfBirth" title="Birth time" />
 		 
 		<datetime name="dateTimeE" tz="true" title="Emp Date Time" />
-		<binary name="image" title="Image"/>
+		<binary image="true"  column="image" encrypted="true" name="image" title="Image"/>
 		
 		<many-to-one ref="com.axelor.employee.db.College" name="college" title="College"/>
 		

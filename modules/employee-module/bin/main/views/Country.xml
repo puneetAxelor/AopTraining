@@ -5,11 +5,11 @@
   	http://axelor.com/xml/ns/object-views/object-views_5.3.xsd">
   	
   	<grid name="country-grid" title="Countries" model="com.axelor.employee.db.Country">
-    <field name="name" />
+    <field name="name"  />
     <field name="code" />
   </grid>
 
-  <form name="country-form" title="Country" model="com.axelor.employee.db.Country" width="mini">
+  <form name="country-form"  title="Country" model="com.axelor.employee.db.Country" width="mini">
     <panel title="Overview" itemSpan="12">
       <field name="name" />
       <field name="code" />

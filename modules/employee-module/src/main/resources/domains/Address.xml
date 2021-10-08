@@ -6,12 +6,12 @@
 
 	<module package="com.axelor.employee.db" name="employee"/>
 	
-	<entity name="Address" cacheable="true">
+	<entity logUpdates="true" name="Address" cacheable="true">
 		<string name="name" title="Name" />
 		
 		<string name="street" required="true" max="255" initParam="true"/>
 	    <string name="area" max="255" initParam="true"/>
-	    <string name="city" initParam="true"/>
+	    <string name="city"  initParam="true"/>
 	    <string name="zip" />
 	    <string name="state" />
 	    <many-to-one name="country" ref="Country" initParam="true"/>

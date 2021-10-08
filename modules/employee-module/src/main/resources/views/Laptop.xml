@@ -12,7 +12,7 @@
 		<field name="reference" />
 		<field name="jsonDetails" />
 		<field name="dateOfManufacture"/>
-		<field name="totalAmount"/>
+		<field name="totalAmount"  title="Laptop Age" widget="Progress" aggregate="sum"/>
 		<field name="orderDate"/>
 		<field name="image"/>
 		<field name="dateTimeT"/>
@@ -21,6 +21,7 @@
 		<field name="startDate"/>
 			<field name="endDate"/>
   	</grid>
+
   	
   	<form model="com.axelor.employee.db.Laptop" title="Laptops" name="laptop-form" onNew="action-laptop-record-default-onNew">
   		<panel name="main-panel" title="Main Panel">
@@ -34,14 +35,14 @@
 			<field name="isActive" />
 			<static colSpan="12">This is static and no need for quotes</static>
 			<field name="reference" />
-			<field name="totalAmount"/>
-		<field name="orderDate"/>
+			<field name="totalAmount" />
+		<field name="orderDate" requiredIf="lname != null"/>
 			<separator colSpan="12"/>
 			<field name="jsonDetails" widget="json-raw" />
 			<field name="employee"/>
 			<field name="test"/>
 			<field name="startDate"/>
-			<field name="endDate"/>
+			<field name="endDate" requiredIf="startDate != null"/>
 			<field name="parentTask"/>
       <field name="sequence"/>
 		</panel>
@@ -59,7 +60,7 @@
 				</panel>
 			</panel>
 			<panel name="passwordPanhel" title="Password" onTabSelect="action-password-record">
-				<field name="password" widget="password"/>
+				<field name="password" widget="password" readonlyIf="lname == null"/>
 			</panel>
 			
 			<panel title="Planning">
@@ -159,6 +160,7 @@
 	</cards>
 	
 	<chart name="laptop-chart" title="Laptops per month"> 
+	
 	  <search-fields> 
 	     <field type="datetime" name="fromDateTime" title="From Date"/>
 	     <field type="datetime" name="toDateTime" title="To Date"/>
@@ -183,7 +185,7 @@
 	  ]]>
 	  </dataset>
 	  <category key="month" type="month"/> 
-  	<series key="amount" groupBy="employee" type="bar"/>
+  	<series key="amount" groupBy="lname" type="bar"/>
 	</chart>
 	
 	<custom name="report-tasks-today" title="Laptops Active" css="report-box">

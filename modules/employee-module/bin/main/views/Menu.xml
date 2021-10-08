@@ -19,24 +19,24 @@
   	<menuitem title="Addresses" name="employee-root-address" tag-count="true" parent="employee-root" action="action.employee.root.address" />
   	
   	<action-view name="action.employee.root.address" title="Addresses" model="com.axelor.employee.db.Address">
-  		<view type="grid" name="address-grid" />
-  		<view type="form" name="address-form" />
+  		<view type="grid"  name="address-grid" />
+  		<view type="form"  name="address-form" />
   	</action-view>
   	
   	<dashboard name="welcome.dashboard" title="Welcome!">
-    <dashlet action="grid:laptop-grid" colSpan="4"/>
+    <dashlet canSearch="true" action="grid:laptop-grid" colSpan="4"/>
     <dashlet action="grid:college-grid" colSpan="4"/>
     <dashlet action="cards:laptop-cards" colSpan="4"/>
     <dashlet action="custom:report-tasks-today"/>
     <dashlet action="chart:laptop-chart"/>
-    <dashlet colSpan="12" action="sale.orders"/>
+    
   </dashboard>
 
-  <action-view name="welcome" title="Welcome!">
+  <action-view  name="welcome" title="Welcome!">
     <view type="dashboard" name="welcome.dashboard"/>
   </action-view>
 
-  <menuitem name="menu-dashboards" order="-101"
+  <menuitem  name="menu-dashboards" order="-101"
     title="Dashboards" icon="fa-dashboard" icon-background="blue"/>
 
   <menuitem name="menu-welcome" parent="menu-dashboards"
@@ -50,7 +50,7 @@
   		<view type="cards" name="laptop-cards"/>
   		<view type="chart" name="laptop-chart" />
   		<view type="calendar" name="project-task-calendar-my" />
-  		<view-param name="forceEdit" value="true"/>
+  		<view-param name="forceEdit"   value="true"/>
 		<view-param name="showArchived" value="true"/>
   		<view-param name="search-filters" value="laptop-search-filters"/>
   	</action-view>
