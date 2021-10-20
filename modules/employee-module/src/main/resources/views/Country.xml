@@ -4,15 +4,21 @@
   	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
   	http://axelor.com/xml/ns/object-views/object-views_5.3.xsd">
   	
-  	<grid name="country-grid" title="Countries" model="com.axelor.employee.db.Country">
+  <grid name="country-grid" title="Countries" model="com.axelor.employee.db.Country">
     <field name="name"  />
     <field name="code" />
+    <field name="countryBool" widget="boolean"/>
   </grid>
 
   <form name="country-form"  title="Country" model="com.axelor.employee.db.Country" width="mini">
     <panel title="Overview" itemSpan="12">
-      <field name="name" />
-      <field name="code" />
+	    <field name="name" />
+	    <field name="code" />
+		<field name="countryBool" widget="boolean" css="inline-checkbox"/>
+			
+		<field name="YesOrNoBool" widget="boolean-select" x-true-text="Yes" x-false-text="No" />
+		<field name="RadioBool" widget="boolean-radio" x-true-text="On" x-false-text="Off" />
+		<field name="SwitchBool" widget="boolean-switch" />
     </panel>
   </form>
   	

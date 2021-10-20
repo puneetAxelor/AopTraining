@@ -4,13 +4,14 @@
   	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
   	http://axelor.com/xml/ns/object-views/object-views_5.3.xsd">
 
-	<grid canArchive="true" x-selector="checkbox"   sortable="false" width="large" orderBy="name" onNew="action-employee-record" edit-icon="false"  helpLink="www.sampleLink.com" expandable="true" editable="true" canNew="true" canMove="true" canSave="true" canDelete="true" canEdit="true" model="com.axelor.employee.db.Employee"  title="Employees" customSearch="true" freeSearch="none" name="employee-grid">
-		<field name="name" />
+	<grid canArchive="true"   x-selector="checkbox"   sortable="false" width="large" orderBy="name" onNew="action-employee-record" edit-icon="false"  helpLink="www.sampleLink.com" expandable="true" editable="true" canNew="true" canMove="true" canSave="true" canDelete="true" canEdit="true" model="com.axelor.employee.db.Employee"  title="Employees" customSearch="true" freeSearch="none" name="employee-grid">
+		<field  name="name"/>
 		<field name="lastName" bgColor="red" fgColor="red"/>
 		<field name="fullName" />
+		<field name="phone" widget="phone"/>
 		<field name="parentName" />
 		<field name="sequence" hidden="true"/>
-		<field name="email" />
+		<field name="email" widget="email"/>
 		<field name="transientTest" />
 		<field bgColor="red" fgColor="red" domain="isActive=true" canNew="false" canSuggest="false" name="comments" />
 		<field name="isActive" />
@@ -19,8 +20,13 @@
 		<field name="timeOfBirth" />
 		<field name="dateTimeE" />
 		<field name="college"/>
+		<field name="integerExample" widget="Integer"/>
+		<field name="decimalExample" widget="Decimal" x-scale="2" x-precision="15"/>
 		<field name="laptopSet" />
 		<field name="image" />
+		<field name="dateExample" widget="date"/>
+		<field name="timeExample" widget="time"/>
+		<field name="dateTimeExample" widget="date-time"/>
 	</grid>
 	
 	<form model="com.axelor.employee.db.Employee" title="Employee" name="employee-form"
@@ -30,6 +36,15 @@
 		
 		<panel title="Main Panel" name="mainPanel" showFrame="true" if-module="employee-module">
 			<panel name="innerPanel1" colSpan="8" title="Inner Panel 1">
+			
+				<field name="emails">
+				  <editor layout="table" onNew="compute-default-email">
+				    <field name="email" />
+				    <field name="primary" widget="toggle" x-icon="fa-star-o" x-icon-active="fa-star" x-exclusive="true" />
+				    <field name="optOut" widget="toggle" x-icon="fa-ban" />
+				    <field name="invalid" widget="toggle" x-icon="fa-exclamation-circle" />
+				  </editor>
+				</field>
 				<field name="name" />
 				<panel name="imagePanel" title="Image Panel">
 					<field name="image" widget="Image"/>
@@ -37,11 +52,13 @@
 				<field name="lastName" />
 				<field name="fullName" showIf="name != null" />
 				<field name="parentName" />
-				<field name="email">
+				<field name="email" widget="email">
 					<viewer><![CDATA[ 
 	        			<a href="mailto:{{record.email}}">{{record.email}}</a>
 	        		]]></viewer>
 				</field>
+				<field name="phone" widget="phone"/>
+				<field name="textWidget" widget="text"/>
 				<field name="transientTest" />
 				<field name="comments" />
 				<field name="isActive" />
@@ -51,6 +68,11 @@
 				<field name="dateTimeE" />
 				<field name="college" hideIf="email==null"/>
 				<field name="laptopSet" />
+				<help css="alert-info">
+					<![CDATA[
+					Help text using widget
+					]]>
+				</help>	
 				
 								
 			</panel>
@@ -67,6 +89,8 @@
 	        			<a href="mailto:{{record.email}}">{{record.email}}</a>
 	        		]]></viewer>
 				</field>	
+				<field name="parentName"/>
+				<field name="college"/>
 			</panel>
 	</form>
 	
@@ -81,7 +105,9 @@
 	
 	<action-record name="action-employee-onSave" model="com.axelor.employee.db.Employee">
 		<field name="isActive" expr="true"/>
+		
 	</action-record>
+	
 
 	<action-validate name="action-employee-validate">
 		<notify message="Employee saved to the database"/>
@@ -93,6 +119,11 @@
 
 	<action-record name="action-employee-record" model="com.axelor.employee.db.Employee">
 		<field name="parentName" expr="Axelor"/>
+		<field name="college" expr="action: action-employee-default-college"/>
+	</action-record>
+	
+	<action-record name="action-employee-default-college" model="com.axelor.employee.db.College" search="self.address IS NOT NULL">
+		<field name="cname" expr="Default"/>
 	</action-record>
 </object-views>
 	

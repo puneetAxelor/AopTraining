@@ -26,10 +26,32 @@
 		<date name="dateOfManufacture" title="DOM"/>
 		<date name="startDate" title="Start"/>
 		<date name="endDate" title="End"/>
+		
+		<datetime name="plannedStartDate"/>
+	    <decimal name="plannedDuration"/>
+	    <decimal name="plannedProgress"/>
+	    
+	    <many-to-many name="finishToStartTaskSet" ref="Laptop" title="Tasks to finish before start"
+      table="PROJECT_TASK_F2S"
+      column="from_task_id"
+    column2="to_task_id" />
+    <many-to-many name="startToStartTaskSet" ref="Laptop" title="Tasks to start before start"
+      table="PROJECT_TASK_S2S"
+      column="from_task_id"
+      column2="to_task_id" />
+    <many-to-many name="finishToFinishTaskSet" ref="Laptop" title="Tasks to finish before finish"
+      table="PROJECT_TASK_F2F"
+      column="from_task_id"
+      column2="to_task_id" />
+    <many-to-many name="startToFinishaskSet" ref="Laptop" title="Tasks to start before finish"
+      table="PROJECT_TASK_S2F"
+      column="from_task_id"
+      column2="to_task_id" />
+		
   		<boolean name="isActive" title="is active" />
   		<datetime name="dateTimeT" tz="true" title="Date time test"/>
   		<enum name="status" ref="STATUS"/>
-  		<many-to-one name="employee" ref="Employee" />
+  		<many-to-one name="employee" ref="com.axelor.employee.db.Employee" />
   		<many-to-one ref="com.axelor.meta.db.MetaFile" name="image" title="Image"/>
   	</entity>
 </domain-models>

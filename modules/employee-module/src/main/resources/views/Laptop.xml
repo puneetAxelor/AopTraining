@@ -4,7 +4,10 @@
   	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
   	http://axelor.com/xml/ns/object-views/object-views_5.3.xsd">
   	
-  	<grid model="com.axelor.employee.db.Laptop" title="Laptops" customSearch="true" freeSearch="true" canArchive="true"  name="laptop-grid">
+  	<grid model="com.axelor.employee.db.Laptop" editable="true" title="Laptops" customSearch="true" freeSearch="true" canArchive="true"   name="laptop-grid">
+	  	<toolbar>
+			<button onClick="action-button-record" prompt="Are you sure? (From toolBar)" name="clickMeBtn1" title="Click Me!" icon="fa-print"/>
+		</toolbar>
   		<hilite background="warning" strong="true" if="$contains(lname, 'something')"/>
   		<field name="lname" />
 		<field name="status" />
@@ -18,15 +21,19 @@
 		<field name="dateTimeT"/>
 		<field name="uniqueTestField"/>
 		<field name="employee"/>
+		<field name="test"/>
 		<field name="startDate"/>
-			<field name="endDate"/>
+		<field name="endDate"/>
   	</grid>
 
   	
-  	<form model="com.axelor.employee.db.Laptop" title="Laptops" name="laptop-form" onNew="action-laptop-record-default-onNew">
-  		<panel name="main-panel" title="Main Panel">
+  	
+  	<form model="com.axelor.employee.db.Laptop" title="Laptops" name="laptop-form" onNew=" action-laptop-record-default-onNew" onLoad="com.axelor.employee.web.LaptopController:exampleMethod">
+		
+  		<panel name="main-panel" title="Main Panel" >
+  		<field name="dummy"/>
   			<field name="$isValidated" title="Validated" type="one-to-many" target="com.axelor.employee.db.Address" colSpan="12"/>
-	  		<field name="lname" />
+	  		<field name="lname"  />
 	  		<field name="employee"/>
 	  		<spacer/>
 			<field name="status" />
@@ -36,18 +43,19 @@
 			<static colSpan="12">This is static and no need for quotes</static>
 			<field name="reference" />
 			<field name="totalAmount" />
-		<field name="orderDate" requiredIf="lname != null"/>
+			<field name="orderDate"/>
 			<separator colSpan="12"/>
 			<field name="jsonDetails" widget="json-raw" />
 			<field name="employee"/>
-			<field name="test"/>
+			<field name="test" onChange="action-call-method, action-call-service-method"/>
 			<field name="startDate"/>
 			<field name="endDate" requiredIf="startDate != null"/>
 			<field name="parentTask"/>
-      <field name="sequence"/>
+    	  	<field name="sequence"/>
+    	  	<field name="dateTimeT"/>
 		</panel>
 		
-		<panel-dashlet action="laptop-trees"/>
+		<panel-dashlet title="dashlet-example-trees" action="laptop-trees"/>
 		
 		<panel-tabs>
 			<panel name="laptopDetailsPanel" title="Laptop Panel" onTabSelect="action-laptop-record">
@@ -59,14 +67,14 @@
 					<field name="image" widget="binary-link"/>
 				</panel>
 			</panel>
-			<panel name="passwordPanhel" title="Password" onTabSelect="action-password-record">
+			<panel name="passwordPanel" title="Password" onTabSelect="action-password-record">
 				<field name="password" widget="password" readonlyIf="lname == null"/>
 			</panel>
 			
 			<panel title="Planning">
-        <field name="plannedStartDate"/>
-        <field name="plannedDuration"/>
-        <field name="plannedProgress"/>
+        <field name="plannedStartDate" widget="dateTime"/>
+        <field name="plannedDuration" widget="decimal"/> 
+        <field name="plannedProgress" widget="decimal"/>
         <spacer/>
         <panel title="Linked project tasks" colSpan="12">
           <field name="finishToStartTaskSet" widget="TagSelect" />
@@ -78,7 +86,7 @@
 		</panel-tabs>
 		
 		<panel name="buttonsPanel" sidebar="true">
-			<button onClick="action-validate" name="validateBtn" title="Validate"/>
+			<button onClick="action-validate, action-button-record, action-button--records" name="validateBtn" title="Validate"/>
 		</panel>
 		
 		<panel name="buttonsPanel1" sidebar="true">
@@ -92,6 +100,8 @@
 		<panel name="buttonsPanel2" sidebar="true">
 			<button onClick="check-order-dates" name="checkBtn" title="Check"/>
 		</panel>
+		
+		
 		
   	</form>
   	
@@ -117,7 +127,7 @@
 		<field name="dateOfManufacture" as="progress"/>
 	  </node>
 
-</tree>
+	</tree>
   	
   	<action-view name="projects.task.open.project" title="Laptop Tree" model="com.axelor.employee.db.Employee">
 	    <view type="grid" name="laptop-grid"/>
@@ -231,14 +241,26 @@
 
 	<search-filters name="laptop-search-filters" model="com.axelor.employee.db.Laptop" title="Laptops">
 		<field name="dateOfManufacture" hidden="true"/>
-		<filter title="Date time is not null">
-			<domain>self.dateTimeT != null</domain>
+		<filter title="Date of Manufacture is not null">
+			<domain>self.dateOfManufacture != null</domain>
 		</filter>
 	</search-filters>
 
 	<action-method name="action-laptop-address-about">
-    	<call class="com.axelor.laptop.web.HelloController" method="say(lname)"/>
+    	<call class="com.axelor.employee.web.HelloController" method="say(lname)"/>
   	</action-method>
+  	
+  	<action-method name="action-laptop-example">
+  		<call class="com.axelor.employee.web.LaptopController" method="exampleMethod"/>
+  	</action-method>
+  	
+  	<action-record name="action-call-method" model="com.axelor.employee.db.Laptop">
+  		<field name="test" expr="call:com.axelor.employee.web.LaptopController:exampleMethod"/>
+  	</action-record>
+  	
+  	<action-record name="action-call-service-method" model="com.axelor.employee.db.Laptop">
+  		<field name="test" expr="call:com.axelor.employee.service.LaptopService:callService()"/>
+  	</action-record>
   	
   	<action-record name="action-laptop-record-default-onNew" model="com.axelor.employee.db.Laptop">
   		<field name="test" expr="eval: _test" />
@@ -248,8 +270,16 @@
   		<field name="dateOfManufacture" copy="false " expr="eval: __date__" if="dateOfManufacture == null" />
   	</action-record>
   	
-  	<action-record name="action-password-record" model="com.axelor.employee.db.Laptop">
+  	<action-record name="action-password-record"  model="com.axelor.employee.db.Laptop">
   		<field name="password" expr="12345" if="password = null"/>  	
+  	</action-record>
+  	
+  	<action-record name="action-button-record"  model="com.axelor.employee.db.Laptop">
+  		<field name="lname" expr="select: count(lname) as total from Laptop"/>	
+  	</action-record>
+  	
+  	<action-record name="action-button--records"  model="com.axelor.employee.db.Laptop">
+  		<field name="dummy" expr="select[]: lname from Laptop"/>	
   	</action-record>
   	 
   	<action-validate name="action-validate">
@@ -280,4 +310,12 @@
   	<action-record name="action-validate-onClick" model="com.axelor.employee.db.Laptop">
 		<field name="$isValidated" expr="eval: true"/>
 	</action-record>
+	
+	<form model="com.axelor.employee.db.Laptop" extension="true" id="laptop-form-id" title="Laptops" name="laptop-form">
+		<extend target="panel[@title='Password']">
+			<insert position="after">
+				<panel-dashlet action="laptop-trees" title="test title"/>
+			</insert>
+		</extend>
+	</form>
 </object-views>

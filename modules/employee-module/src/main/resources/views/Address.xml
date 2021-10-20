@@ -4,8 +4,8 @@
   	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
   	http://axelor.com/xml/ns/object-views/object-views_5.3.xsd">
   	
-  	<grid model="com.axelor.employee.db.Address" title="Addresses" name="address-grid">
-  		<field name="name"/>
+  	<grid  model="com.axelor.employee.db.Address" title="Addresses" name="address-grid">
+  		<field  name="name"/>
 	  	<field name="street" />
 	    <field name="area" />
 	    <field name="city" />
@@ -16,7 +16,7 @@
 		<field name="college" />
   	</grid>
   	
-  	<form model="com.axelor.employee.db.Address" title="Address" name="address-form">
+  	<form model="com.axelor.employee.db.Address" title="Address" name="address-form" >
   		<panel>
 			<field name="name"/>
 	 		<field name="street" />
@@ -27,7 +27,14 @@
 		    <field name="country" />
 	 		<field name="employeeAddress" />
 			<field name="college" target-name="collegeType"/>
+			<static>
+				<![CDATA[
+				static text from widget
+				]]>
+			</static>	
 		</panel>
+		
+		
   	</form>
   	
   	

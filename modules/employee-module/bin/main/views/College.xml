@@ -4,36 +4,52 @@
   	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
   	http://axelor.com/xml/ns/object-views/object-views_5.3.xsd">
   	
-  	 <grid model="com.axelor.employee.db.College"  title="Colleges" editable="true" canSave="true" name="college-grid" groupBy="collegeType">
-  		<hilite if="cName == null" color="warning" strong="true"/>
+  	 <grid model="com.axelor.employee.db.College"  title="Colleges" canSave="true" name="college-grid">
+  		<hilite if="cname == null" color="warning" strong="true"/>
   		<field name="collegeType" hidden="true"/>
   		<field name="cname" />
-		<field name="address"  />
+		<field name="address" />
+		<field name="laptopSet"/>
   	</grid>
   	
-  	<grid model="com.axelor.employee.db.College" title="Colleges" name="college-test-grid" editable="true">
+  	<grid model="com.axelor.employee.db.College" title="Colleges test" name="college-test-grid" >
 		<toolbar>
-			<button onClick="clickMe" prompt="Are you sure? (From toolBar)" name="clickMeBtn" title="Click Me!" icon="fa-print"/>
+			<button onClick="action-clickMeBtn1" prompt="Are you sure? (From toolBar)" name="clickMeBtn1" title="Click Me!" icon="fa-print"/>
 		</toolbar>
 		<menubar>
 			<menu title="Buttons">
-				<item action="action" title="Test"/>
+				<item action="action-button-record" title="Test"/>
 			</menu>
 			<menu title="Button1">
-				<item action="action1" title="Test 1"/>
+				<item action="action-employee-default-college" title="Test 1"/>
 			</menu>
 		</menubar>
 		<field name="collegeType" title="Test college"/>
-		<field name="collegeName" canSuggest="true"/>
-		<field name="address" domain="self.employeeAddress == 'BENGALURU'" massUpdate="true"/>
+		<field name="cname" title="College Name"/>
+		<field name="address" domain="self.college==null" massUpdate="true"/>
 		<button onClick="clickMe" prompt="Are you sure?" name="clickMeBtn" title="Click Me!" icon="fa-print"/>
 	</grid>
+	
+	<action-view name="action-clickMeBtn1" title="Country" model="com.axelor.employee.db.Country">
+   	 
+  	  <view type="form" name="country-form"/>
+  	  <view-param name="popup" value="reload"/>
+  	  <view-param name="popup-save" value="false"/>
+  	  <view-param name="popup.maximized" value="true"/>
+  	</action-view>
+  	
+  	
   	
   	<form model="com.axelor.employee.db.College" title="College" width="large" name="college-form">
+  		<toolbar>
+			<button onClick="action-employee-default-college" prompt="Are you sure? (From toolBar)" name="clickMeBtn1" title="Click Me!" icon="fa-print"/>
+		</toolbar>
   		<panel>
-	  		<field name="collegeType" />
-		  	<field name="cname" />
-			<field name="address" canEdit="true" canNew="true" canDelete="true" canSave="true" canCopy="true" canAttach="true" />
+	  		<field name="collegeType"  widget="RadioSelect" />
+	  		<field name="collegeType"  widget="CheckboxSelect" />
+		  	<field name="cname" title="College Name"/>
+			<field name="address" domain="self.college is null" canEdit="true" canNew="true" canDelete="true" canSave="true" canCopy="true" canAttach="true" />
+			<field name="laptopSet"/>
 		</panel>
 		<panel-tabs>	
 			<panel-related field="employeeList"  canMove="true" orderBy="sequence" colSpan="12" form-view="employee-popup-form" grid-view="employee-grid" x-selector="checkbox"/>
@@ -64,5 +80,9 @@
 			</panel>
 		</panel-tabs>
   	</form>
+  	
+  	<action-record name="action-button-record"  model="com.axelor.employee.db.College">
+  		<field name="cname" expr="select: select cname from com.axelor.employee.db.College"/>	
+  	</action-record>
   	
 </object-views>

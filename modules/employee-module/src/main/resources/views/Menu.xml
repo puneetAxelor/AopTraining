@@ -8,9 +8,15 @@
   	
   	<menuitem title="Employees" name="employee-root-employee" icon="fa-id-card" icon-background="blue" tag="Important" tag-style="important" tag-count="true" parent="employee-root" action="action.employee.root.employee" />
   	
-  	<action-view name="action.employee.root.employee" title="Employees" model="com.axelor.employee.db.Employee" icon="fas fa-user">
+  	<action-view name="action.employee.root.employee" title="Employees" model="com.axelor.employee.db.Employee" icon="fas fa-user" home="true" >
   		<view type="grid" name="employee-grid" />
   		<view type="form" name="employee-form" />
+  		<view-param name="show-confirm" value="false"/>
+  		<view-param name="reload-dotted" value="true"/>
+  		<view-param name="download" value="true"/>
+  		<view-param name="show-confirm" value="false"/>
+  		
+  		
   	</action-view>
 
   	<menuitem title="Employees" name="employee-top-root" top="true" left="false"/>
@@ -24,13 +30,13 @@
   	</action-view>
   	
   	<dashboard name="welcome.dashboard" title="Welcome!">
-    <dashlet action="grid:laptop-grid" colSpan="4"/>
-    <dashlet action="grid:college-grid" colSpan="4"/>
-    <dashlet action="cards:laptop-cards" colSpan="4"/>
-    <dashlet action="custom:report-tasks-today"/>
-    <dashlet action="chart:laptop-chart"/>
-    <dashlet colSpan="12" action="sale.orders"/>
-  </dashboard>
+	    <dashlet action="grid:laptop-grid" colSpan="4"/>
+	    <dashlet action="grid:college-grid" colSpan="4"/>
+	    <dashlet action="cards:laptop-cards" colSpan="4"/>
+	    <dashlet action="custom:report-tasks-today"/>
+	    <dashlet action="chart:laptop-chart"/>
+	    
+	 </dashboard>
 
   <action-view name="welcome" title="Welcome!">
     <view type="dashboard" name="welcome.dashboard"/>
@@ -51,8 +57,11 @@
   		<view type="chart" name="laptop-chart" />
   		<view type="calendar" name="project-task-calendar-my" />
   		<view-param name="forceEdit" value="true"/>
+  		<view-param name="limit" value="2" />
+  		<view-param name="forceTitle" value="true"/>
 		<view-param name="showArchived" value="true"/>
   		<view-param name="search-filters" value="laptop-search-filters"/>
+  		
   	</action-view>
   	
   	<menuitem name="menu-project-tasks-gantt" parent="employee-root"
@@ -83,15 +92,16 @@
   	<action-view name="action.employee.root.college" title="Colleges" model="com.axelor.employee.db.College">
   		<view type="grid" name="college-grid" />
   		<view type="form" name="college-form" />
-  		<view-param name="details-view" value="true" />
-  		<domain>self.address != null</domain>	
+  		
+  		
   	</action-view>
   	
  	<menuitem title="Test colleges" name="employee-root-test-college" parent="employee-root" action="action.employee.test.college"/>
 	<action-view name="action.employee.test.college" title="Test colleges" model="com.axelor.employee.db.College">
 		<view type="grid" name="college-test-grid"/>
-		<view type="form" name="college-form"/>
+		<view type="form" name="college-form" />
 		<context name="_showRecord" expr="eval: 2"/>
+		<context name="_showSingle" expr="true"/>
 	</action-view>
 
 	<menuitem name="menu-employee-country" parent="employee-root" title="Country"  action="employee.country"/>
@@ -99,7 +109,9 @@
   	<action-view name="employee.country" title="Country" model="com.axelor.employee.db.Country">
    	 <view type="grid" name="country-grid"/>
   	  <view type="form" name="country-form"/>
-  	</action-view>
+  	  <view-param name="popup" value="true"/>
+  	  <view-param name="show-toolbar" value="false"/>
+  	    	</action-view>
   	
   	<menuitem title="Performances" name="employee-root-performance" parent="employee-root" action="action.employee.root.performance" />
 

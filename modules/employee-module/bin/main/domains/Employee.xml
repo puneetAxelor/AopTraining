@@ -10,15 +10,15 @@
 		<string name="name" insertable="true" title="FirstName" required="true" default="John" />
 		<string name="lastName" index="idx_last" search="name" title="LastName" required="true" default="Doe" />
 		
-		<string name="fullName"  search="name,email" title="FullName" readonly="true"  >
+		<string name="fullName"  namecolumn="true"  search="name" title="FullName" readonly="true"  >
 		<![CDATA[
 				return name + " " + lastName; 
 			]]>
 		</string>
-		
+		<string name="phone" title="Phone"/>
 		<integer name="sequence"/>
 		
-		<string name="email"  namecolumn="true" required="true" index="true" unique="true" min="12" max="100" title="Email" help="This field takes employee's email" />
+		<string name="email" required="true" index="true" unique="true"  title="Email" help="This field takes employee's email" />
 		<string name="transientTest" title="Transient test" hidden="true" transient="true" />
 		<string name="comments" search="fullName"  copy="true" nullable="true" multiline="true" />
 		<string name="parentName" title="Parent name" />
@@ -27,15 +27,15 @@
 		<date name="dateOfBirth" title="DOB" />
 		<time name="timeOfBirth" title="Birth time" />
 		 
-		<datetime name="dateTimeE" tz="true" title="Emp Date Time" />
+		<datetime name="dateTimeE"  tz="true" title="Emp Date Time" />
 		<binary image="true"  column="image" encrypted="true" name="image" title="Image"/>
-		
+		 
 		<many-to-one ref="com.axelor.employee.db.College" name="college" title="College"/>
 		
-			
-		<many-to-many ref="com.axelor.employee.db.Laptop" name="laptopSet" title="Laptops" />		
+			 
+		<one-to-many ref="com.axelor.employee.db.Laptop" name="laptopSet" title="Laptops" />		
 		
-		<finder-method name="findByNameAndEmail" using="name,email" orderBy="name" cacheable="true"/>
+		<finder-method  name="findByNameAndEmail" using="name,email" orderBy="name" cacheable="true"/>
 		<finder-method name="findAllByNameAndEmail" using="name,email" all="true"/>
 		<finder-method name="findByNameOrEmail" using="String:name,String:email" filter="self.name = :name OR self.email = :email"/>
 

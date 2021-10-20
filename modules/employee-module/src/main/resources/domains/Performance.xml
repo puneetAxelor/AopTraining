@@ -12,6 +12,8 @@
 		<string name="name" title="Name"/>
 		<decimal name="performance" title="%"/>
 		<string name="description" title="Description" large="true"/>
+		<binary image="true"  column="image" encrypted="true" name="image" title="Image"/>
+		 
 	</entity>
 	
 </domain-models>
